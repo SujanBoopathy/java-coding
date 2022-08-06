@@ -7,6 +7,9 @@ class Player{
 	public void setPlayerName(String name){
 		this.playerName=name;
 	}
+	public String getName(){
+		return playerName;
+	}
 }
 
 class TicTacToe{
@@ -30,7 +33,8 @@ class TicTacToe{
 		
 	}
 	
-	public static  boolean checkGameStatus(int s){
+	
+	public static boolean checkStatus(int s){
 		for(int i=0;i<3;i++){
 			int flag=1;
 			for(int j=0;j<3;j++){
@@ -41,6 +45,7 @@ class TicTacToe{
 				return true;
 			
 		}
+		
 		for(int i=0;i<3;i++){
 			int flag=1;
 			for(int j=0;j<3;j++){
@@ -50,27 +55,14 @@ class TicTacToe{
 			if(flag==1)
 				return true;
 		}
-		for(int i=0;i<3;i++){
-			int flag=1;
-			for(int j=0;j<3;j++){
-				if(board[i][j]!=s && i+j==2)
-					flag=0;
-			}
-			if(flag==1)
-				return true;
-		}
-		for(int i=0;i<3;i++){
-			int flag=1;
-			for(int j=0;j<3;j++){
-				if(board[i][j]!=s && i==j)
-					flag=0;
-			}
-			if(flag==1)
-				return true;
-		}
 		
+		if(board[0][0] ==s && board[1][1]==s && board[2][2]==s)
+			return true;
+		if(board[1][1]==s && board[0][2]==s && board[2][0]==s)
+			return true;
 		
 		return false;
+		
 	}
 	
 	
@@ -90,30 +82,47 @@ class TicTacToe{
 		boolean p_1=false,p_2=false;
 		int count=0;
 		while(true){
+			if(count%2==0)
+				System.out.println("Player 1 :");
+			else
+				System.out.println("Player 2 :");
+				
 			System.out.println("Enter row :");
 			int row=sc.nextInt();
 			System.out.println("Enter col :");
 			int col=sc.nextInt();
-			if(board[row][col]!=0)
-				continue;
-				
-			if(count%2==0)
-				board[row][col]=1;
-			else
-				board[row][col]=2;
 			
-			if(checkGameStatus(1)){
-				p_1=true;
-				break;
+				
+				
+			if(board[row][col]==0){
+				if(count%2==0)
+					board[row][col]=1;
+				else
+					board[row][col]=2;
+				
+				
+				obj.showBoard();
+				if(checkStatus(1)){
+					p_1=true;
+					break;
+				}
+				if(checkStatus(2)){
+					p_2=true;
+					break;
+				}
+				
+				count++;
 			}
-			if(checkGameStatus(2)){
-				p_2=true;
-				break;
-			}
-			obj.showBoard();
-			count++;
 			
 		}
+		
+		System.out.println();
+		if(p_1)
+			System.out.println(p1.getName()+" won the match");
+		else if(p_2)
+			System.out.println(p1.getName()+" won the match");
+		else
+			System.out.println("Match Tie");
 				
 		
 		
