@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 class Player{
 	private String playerName;
+	
 
 	public void setPlayerName(String name){
 		this.playerName=name;
@@ -9,7 +10,7 @@ class Player{
 }
 
 class TicTacToe{
-	private int[][]  board=new int[3][3];
+	private static  int[][]  board=new int[3][3];
 	
 	public void showBoard(){
 		for(int j=0;j<3;j++){
@@ -26,6 +27,50 @@ class TicTacToe{
 			}
 			System.out.println("\n_ _ _ _ _ _ _\n");
 		}
+		
+	}
+	
+	public static  boolean checkGameStatus(int s){
+		for(int i=0;i<3;i++){
+			int flag=1;
+			for(int j=0;j<3;j++){
+				if(board[i][j]!=s)
+					flag=0;
+			}
+			if(flag==1)
+				return true;
+			
+		}
+		for(int i=0;i<3;i++){
+			int flag=1;
+			for(int j=0;j<3;j++){
+				if(board[j][i]!=s)
+					flag=0;
+			}
+			if(flag==1)
+				return true;
+		}
+		for(int i=0;i<3;i++){
+			int flag=1;
+			for(int j=0;j<3;j++){
+				if(board[i][j]!=s && i+j==2)
+					flag=0;
+			}
+			if(flag==1)
+				return true;
+		}
+		for(int i=0;i<3;i++){
+			int flag=1;
+			for(int j=0;j<3;j++){
+				if(board[i][j]!=s && i==j)
+					flag=0;
+			}
+			if(flag==1)
+				return true;
+		}
+		
+		
+		return false;
 	}
 	
 	
@@ -42,8 +87,34 @@ class TicTacToe{
 		System.out.println("Enter player 2 name:");
 		p2.setPlayerName(sc.next());
 		
-		obj.showBoard();
+		boolean p_1=false,p_2=false;
+		int count=0;
+		while(true){
+			System.out.println("Enter row :");
+			int row=sc.nextInt();
+			System.out.println("Enter col :");
+			int col=sc.nextInt();
+			if(board[row][col]!=0)
+				continue;
+				
+			if(count%2==0)
+				board[row][col]=1;
+			else
+				board[row][col]=2;
 			
+			if(checkGameStatus(1)){
+				p_1=true;
+				break;
+			}
+			if(checkGameStatus(2)){
+				p_2=true;
+				break;
+			}
+			obj.showBoard();
+			count++;
+			
+		}
+				
 		
 		
 		
